@@ -1483,7 +1483,7 @@ async function LLM1_HELPER_NODE(state) {
     const system =
         `You are a strict Extraction Engine for product variants only.\n` +
         `${ACTION_CODE_GUIDE}\n` +
-        `Return JSON only: { "actions": [{ "id": "string", "action_code": 1 | 2 | 3, "qty": number, "action_desc": "string" }] }\n\n` +
+        `Return JSON only: { "reasoning": "string", "actions": [{ "id": "string", "action_code": 1 | 2 | 3, "qty": number, "action_desc": "string" }] }\n\n` +
         `Rules:\n` +
         `1. Use only IDs from the Variant Candidates list.\n` +
         `2. Support multilingual matching and simple translation of the user's words.\n` +
@@ -1492,7 +1492,8 @@ async function LLM1_HELPER_NODE(state) {
         `5. If exactly one candidate directly matches the color/size/type requested, return one action for that ID.\n` +
         `6. Use Action Code 2 for remove words like minus, kurangan, kurangkan, tolak, remove, or 减.\n` +
         `7. SEPARATE QUANTITY FROM VARIANT MATCH: If the user asks for "2 boxes" but the variant label says "(1 Box)", it IS A PERFECT MATCH. The "2" goes into 'qty', and you use that variant ID. Do NOT reject it over quantity numbers.\n` +
-        `8. If ambiguous or no direct match, return an empty actions array [].`;
+        `8. Always match the requested product/variant ID regardless of whether the user wants to ADD, REMOVE, or SET it. The action code (1, 2, or 3) must be extracted correctly based on the user's intent, but the product/variant matching logic remains exactly the same.\n` +
+        `9. If ambiguous or no direct match, return an empty actions array [].`;
 
     const user =
         `Variant Candidates:\n${vocabText}\n\n` +
@@ -1503,7 +1504,7 @@ async function LLM1_HELPER_NODE(state) {
         `4. If no direct match or more than one direct match, return an empty actions array [].\n\n` +
         `User Input: "${state.userText}"`;
 
-    const schemaHint = `{"actions":[{"id":"variant_12","action_code":1,"qty":2,"action_desc":"add two units"}]}`;
+    const schemaHint = `{"reasoning":"User wants to remove a black pen, which directly matches variant_55. Action code is 2.","actions":[{"id":"variant_55","action_code":2,"qty":1,"action_desc":"remove one unit"}]}`;
 
     let extracted = { actions: [] };
     try {
