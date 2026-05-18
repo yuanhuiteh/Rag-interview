@@ -1,0 +1,34 @@
+# Dependency directories
+node_modules/
+jspm_packages/
+
+# Debug logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+logs/
+*.log
+
+# Sensitive environment variables
+.env
+.env.local
+.env.*.local
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Large model data (if downloaded locally)
+transformers_cache/
+.cache/
+
+# Data / DB backups
+data/*.sqlite
+data/*.sql
+backup/
+sample/
+sample.js
+test Whatsapp.js
+verify_fix.js
+test_fix.js
+test_general_graph.js
