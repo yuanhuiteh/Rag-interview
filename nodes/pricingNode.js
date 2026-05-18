@@ -1504,7 +1504,7 @@ async function LLM1_HELPER_NODE(state) {
         `4. If no direct match or more than one direct match, return an empty actions array [].\n\n` +
         `User Input: "${state.userText}"`;
 
-    const schemaHint = `{"reasoning":"User wants to remove a black pen, which directly matches variant_55. Action code is 2.","actions":[{"id":"variant_55","action_code":2,"qty":1,"action_desc":"remove one unit"}]}`;
+    const schemaHint = `{"reasoning":"User wants to remove a black table, which directly matches variant_55. Action code is 2.","actions":[{"id":"variant_55","action_code":2,"qty":1,"action_desc":"remove one unit"}]}`;
 
     let extracted = { actions: [] };
     try {
